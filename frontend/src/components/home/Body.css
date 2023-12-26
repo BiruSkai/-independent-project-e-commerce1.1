@@ -1,0 +1,6 @@
+.bodyContainer{
+        position: relative;
+        height:80vh;
+        top:10vh;
+        border-bottom: 0.5px solid rgb(235, 222, 222);
+}

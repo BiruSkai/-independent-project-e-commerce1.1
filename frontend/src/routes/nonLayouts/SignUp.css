@@ -1,0 +1,17 @@
+form, select, .submitButton{
+       font-size:0.7rem;
+       padding:5px;
+}
+
+.canvasOnForm label, .canvasOnInput{
+        margin:5px;
+}
+
+.canvasOnInput{
+        border-style:none;
+        background-color: #f1f6f6;
+}
+
+.submitButton{
+        margin:5px;
+}

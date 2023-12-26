@@ -1,0 +1,60 @@
+/* for mobile, tablet */
+#forLaptop{
+        display:none;
+}
+
+.headerContainer{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        padding:10px;
+        border-bottom: 0.5px solid rgb(235, 222, 222);
+        position: fixed;
+        top:0;
+        width: 100vw;
+        z-index: 1;
+        
+}
+
+.logoShop{
+        background-image: url("../../images/sun.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width:fit-content;
+
+}
+
+.searchBarContainer form{
+        position:relative;
+}
+
+#searchInput{
+        display:block;
+        width:95%;
+        height:100%;
+        border-radius:10px;
+        border-color: rgb(199, 188, 188);
+        padding:5px;
+}
+
+.searchBarContainer button{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        position:absolute;
+        right:0;
+        top:0;
+        height:100%;
+        border:none;
+        background: none;
+        padding:2px;
+}
+
+.listIcon{
+        padding-right:20px;
+}
+
+@media screen and (min-width:1440px){
+
+}

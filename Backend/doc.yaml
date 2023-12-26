@@ -1,0 +1,755 @@
+openapi: 3.0.0
+info:
+  title: E-Commerce API
+  version: 1.0.0
+  description: A restful API for e-commerce
+  contact:
+    email: 1nikolaus.albert1@gmail.com
+    name: Nikolaus Albert
+paths:
+  /admin/{params}:
+    get:
+      summary: Get all users's detail from a related table
+      description: only for platform staff
+      operationId: admin_query
+      parameters:
+      - name: params
+        in: path
+        description: filled with "user_data" || "user_address"
+        required: true
+        schema:
+          type: string
+          enum:
+            - user_data
+            - user_address
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                Success response:
+                  value: |
+                    [{
+                        "id": 3,
+                        "title": "Msc",
+                        "fullname": "Zeus Thunder",
+                        "gender": "male",
+                        "birth_date": "1990-03-03",
+                        "email": "zeus.t@email.com",
+                        "telephone": 123456,
+                        "user_type": "plattform staff",
+                        "created_at": "2023-09-26T10:38:56.325734"
+                    },
+                    {
+                        "id": 4,
+                        "title": "",
+                        "fullname": "Mira Kin",
+                        "gender": "female",
+                        "birth_date": "1989-03-23",
+                        "email": "mira.kin@email.com",
+                        "telephone": 134567,
+                        "user_type": "seller",
+                        "created_at": "2023-09-26T10:38:56.325734"
+                    }]
+        '400':
+          description: Error
+          content:
+            application/json:
+              examples:
+                Failed response:
+                  value: error, your query {params}
+      tags:
+        - admin
+  
+  /admin/customerData:
+    get:
+      summary: get general user detail by their id 
+      description: ''
+      operationId: adminGet_userData
+      parameters:
+        - in: query
+          name: customerId
+          schema:
+            type: integer
+          required: true
+      responses: 
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                Success response:
+                  value: Success
+        '400':
+          description: Failed
+          content:
+            application/json:
+              examples:
+                Failed response:
+                  value: Error
+      tags:
+        - admin
+
+  /admin/customerAddress:
+    get:
+      summary: get the address of a user by their id 
+      description: ''
+      operationId: adminGet_userAddress
+      parameters:
+        - in: query
+          name: customerId
+          schema:
+            type: integer
+          required: true
+      responses: 
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                Success response:
+                  value: Success
+        '400':
+          description: Failed
+          content:
+            application/json:
+              examples:
+                Failed response:
+                  value: Error
+      tags:
+        - admin
+
+  /admin/customer:
+    delete:
+      summary: delete customer by their id 
+      description: ''
+      operationId: adminDelete_customer
+      parameters:
+        - in: query
+          name: delete_id
+          schema:
+            type: integer
+          required: true
+      responses: 
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                Success response:
+                  value: User has been deleted
+        '400':
+          description: Failed
+          content:
+            application/json:
+              examples:
+                Failed response:
+                  value: Error
+      tags:
+        - admin
+  
+  /login:
+    summary: Login a user with email and password
+    post:
+      summary: Login user
+      description: ''
+      operationId: login_user
+      requestBody:
+        description: An object containing the user's password and email
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+              
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Successful response:
+                  value: Login successful
+        '400':
+          description: Failed to login
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Failed response email:
+                  value: email not found
+                Failed response password:
+                  value: password not matched
+      tags:
+        - general
+  /logout:
+    summary: Logout account
+    get:
+      summary: Logs out user
+      description: ''
+      operationId: logout_user
+      responses:
+        default:
+          description: Success
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Successful response:
+                  value: Logout successful
+      tags:
+        - general
+  /register_user:
+    summary: Register a new user account
+    post:
+      summary: Register a new user account
+      description: ''
+      operationId: register_newUser
+      requestBody:
+        description: An object containing the user's credentials
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUser'
+      responses:
+        '201':
+          description: Success
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Successful response:
+                  value: Registration succeed
+                Failed response (similar email):
+                  value: Similar email found in db. Please try another email
+                Other failed response:
+                  value: Problem occurred 
+      tags:
+        - general
+
+  /user/data:
+    get:
+      summary: get general user detail based on session id
+      description: ''
+      operationId: get_genUser
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Success response for endpoint users/3:
+                  value: |
+                    {   "id": 3,
+                        "title": "Msc",
+                        "fullname": "Zeus Thunder",
+                        "gender": "male",
+                        "birth_date": "1990-03-03",
+                        "email": "zeus.t@email.com",
+                        "telephone": 123456,
+                        "user_type": "plattform staff",
+                        "created_at": "2023-09-26T10:38:56.325734"
+                    }
+      tags:
+        - users
+    put:
+      summary: update general user detail
+      description: ''
+      operationId: update_genUser
+      requestBody:
+        description: An object containing the user's data
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/putGenUser"
+      responses:
+        '200':
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Success response:
+                  value: Success
+          description: Success
+        '400':
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Message:
+                  value: Userdata's update failed.
+          description: Invalid argument
+      tags:
+        - users
+
+  /user/address:
+    get:
+      summary: get the address of a user based on session id
+      description: ''
+      operationId: get_addressUser
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Success response for endpoint users/3:
+                  value: |
+                    {
+                        "id": "2",
+                        "user_id": 4,
+                        "street_name": "Jln.Karapitan",
+                        "street_number": 33,
+                        "postcode": 12324,
+                        "city": "Bandung",
+                        "province": "West Java",
+                        "country_code": "id",
+                        "updated_on": null
+                    }
+      tags:
+        - users
+    put:
+      summary: update the address of a user based on session id
+      description: ''
+      operationId: update_addressUser
+      requestBody:
+        description: An object containing the user's data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/putAddressUser'
+      responses:
+        '200':
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Success response:
+                  value: Success
+          description: Success
+        '400':
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Message:
+                  value: Useraddress's update failed.
+          description: Invalid argument.
+      tags:
+        - users
+        
+  /user/payment/card:
+    post:
+      summary: create credit card detail as payment method
+      description: ''
+      operationId: post_userCard
+      requestBody:
+        description: ''
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/postCard'
+      responses:
+        '200':
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Success response:
+                  value: card has been saved
+          description: card has been saved
+        '400':
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Failed response 1:
+                  value: card not authentic and not saved
+                Failed response 2:
+                  value: error
+          description: Invalid argument.
+      tags:
+        - payment
+        
+    delete:
+      summary: delete credit card based on session user id
+      description: ''
+      operationId: delete_userCard
+      responses:
+        '200':
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Success response:
+                  value: Card has been deleted.
+          description: ok
+        '400':
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                Failed response :
+                  value: error
+          description: err
+
+      tags:
+        - payment
+        
+  /products/categories:
+    get:
+      summary: Get all categories of product
+      description: ''
+      operationId: get_categories 
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                Message:
+                  value:
+                    [
+                      {
+                          "id": 1,
+                          "name": "smartphone",
+                          "parent_id": null
+                      },
+                      {
+                          "id": 2,
+                          "name": "computer",
+                          "parent_id": null
+                      },
+                      {
+                          "id": 3,
+                          "name": "camera",
+                          "parent_id": null
+                      }
+                    ]
+      tags:
+        - productCategories
+        
+  /products:
+    get:
+      parameters:
+        - in: query
+          name: category
+          description: type a product's category 
+          schema:
+            type: string
+          required: true
+      summary: Get all products in a category
+      description: ''
+      operationId: getProducts_inCategory
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                success response:
+                  value:
+                    [{
+                        "id": 1,
+                        "category_id": 1,
+                        "merchant_id": 1,
+                        "name": "Samsung X10",
+                        "price": "US",
+                        "unit_available": 100,
+                        "created_at": "2023-09-26T11:55:39.560512"
+                    },
+                    {
+                        "id": 1,
+                        "category_id": 1,
+                        "merchant_id": 1,
+                        "name": "Samsung X11",
+                        "price": "US",
+                        "unit_available": 110,
+                        "created_at": "2023-10-26T11:55:39.560512"
+                    }]
+          
+        '400':
+          description: Failed
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                failed response:
+                    value: Category or Product unavailable
+      tags:
+        - productCategories
+
+  /products/{productName}:
+    get:
+      parameters:
+        - in: path
+          name: productName
+          description: type a name of a product
+          schema:
+            type: string
+          required: true
+      summary: Get information of the product
+      description: ''
+      operationId: get_productInfo
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                success resposnse:
+                  value:
+                      {
+                        "id": "4",
+                        "category_id": 18,
+                        "merchant_id": 3,
+                        "product_name": "Aqua",
+                        "unit_available": 500,
+                        "created_at": "2023-09-26T04:55:39.560Z",
+                        "price": "0.3"
+                      }
+          
+        '400':
+          description: Failed
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                failed response:
+                  value: Product info unavailable or failure on writting the product's alphabet
+      tags:
+        - productCategories
+      
+  /cart/initcart:
+    get:
+      summary: Initialize a cart
+      description: for ordering product, previewing cart and payment
+      operationId: get_initCart
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                success resposnse:
+                  value:
+                      Cart initialized. Enjoy your shopping.
+          
+        '400':
+          description: Failed
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                failed response:
+                  value: err
+      tags:
+        - cart
+        
+  /cart/chooseProducts:
+    post:
+      summary: Put product order to a cart
+      operationId: get_chooseProducts
+      requestBody:
+        description: contain product_id, quantity
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/chooseProducts'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                success resposnse:
+                  value:
+                      3 Xi s4 added to cart and cost $900
+          
+        '400':
+          description: Failed
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                failed response 1:
+                  value: Init the cart first before shopping.
+                failed response 2:
+                  value: Product id not found.
+                failed response 3:
+                  value: Merchant has only 197 unit(s). Please modify your unit query.
+                failed response 4:
+                  value: err
+      tags:
+        - cart
+        
+  /cart/chooseProducts/delete:
+    delete:
+      parameters:
+        - in: query
+          name: product_id
+          schema:
+            type: integer
+          required: true
+      summary: delete chosen product order in cart
+      operationId: delete_productOrder
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                success resposnse:
+                  value:
+                     The product has been deleted from your cart.
+          
+        '400':
+          description: Failed
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                failed response:
+                  value: err
+      tags:
+        - cart
+        
+  /cart/cartPreview:
+    get:
+      summary: Preview a cart
+      description: for previewing order product before payment
+      operationId: get_cartPreview
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                success resposnse:
+                  value:
+                    [
+                      [
+                          {
+                              "product_name": "Xi s4",
+                              "quantity": 3,
+                              "price_unit": "300",
+                              "total_cost": "900"
+                          }
+                      ],
+                      "Total cost of all items: $900. Proceed to checkout cart for payment."
+                    ]
+          
+        '400':
+          description: Failed
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                failed response:
+                  value: err
+      tags:
+        - cart
+        
+  /cart/checkoutCart:
+    post:
+      summary: Paying the product order in a cart
+      operationId: post_checkoutCart
+      requestBody:
+        description: ''
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/checkoutCart'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              examples:
+                success resposnse:
+                  value:
+                      Thanks for the order and payment. Your order is in process.\n
+                      Uninitializing cart successful.
+          
+        '400':
+          description: Failed
+          content:
+            text/plain; charset=utf-8:
+              examples:
+                failed response 1:
+                  value: Please add first your credit card.
+                failed response 2:
+                  value: Accepted payment method credit card, bank transfer, paypal.
+                failed response 3:
+                  value: Set "pay_now:true" in JSON format to purchase your order.
+                failed response 4:
+                  value: err
+      tags:
+        - cart
+      
+components:
+  schemas:
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    RegisterUser:
+      type: object
+      properties:
+        title:
+          type: string
+        fullname:
+          type: string
+        password:
+          type: string
+        gender:
+          type: string
+        birth_date:
+          type: string
+        email:
+          type: string
+        telephone:
+          type: integer
+        user_type:
+          type: string
+    putGenUser:
+      type: object
+      properties:
+        title:
+          type: string
+        telephone:
+          type: integer
+        user_type:
+          type: string
+        password:
+          type: string
+    putAddressUser:
+      type: object
+      properties:
+        street_name:
+          type: integer
+        street_number:
+          type: integer
+        postcode:
+          type: string
+        city:
+          type: string
+        province:
+          type: string
+        country_code:
+          type: string
+    postCard:
+      type: object
+      properties:
+        method:
+          type: string
+        creditCardNumber:
+          type: number
+    chooseProducts:
+      type: object
+      properties:
+        product_id:
+          type: integer
+        quantity:
+          type: integer
+    checkoutCart:
+      type: object
+      properties:
+        payment_method:
+          type: string
+          enum: 
+            - credit cart
+            - bank transfer
+            - paypal
+        pay_now:
+          type: boolean
+   
