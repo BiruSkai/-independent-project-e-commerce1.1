@@ -12,8 +12,8 @@ export default function Canvas() {
   return (
     <div className="canvasOn">
        <header>
-        <NavLink to="signIn" id="signInNavLink">Sign In</NavLink>
-        <NavLink to="signUp">Sign Up</NavLink>
+        <NavLink to="login" id="signInNavLink">Sign In</NavLink>
+        <NavLink to="register_user">Sign Up</NavLink>
         <div id="closeCanvasSignIn" onClick={closeCanvas}><CloseIcon fontSize='small' /></div>
        </header>
        <main>

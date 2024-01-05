@@ -7,15 +7,20 @@ import React from "react";
 // NonLayouts
 import SignIn from './routes/nonLayouts/SignIn';
 import SignUp from './routes/nonLayouts/SignUp';
+import Products from './routes/nonLayouts/products/Products';
 
 function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
+    <Route>
       <Route path='/' element={<Home />} >
-        <Route path="signIn" element={<SignIn />} />
-        <Route path="signUp" element={<SignUp />} />
+        <Route path="login" element={<SignIn />} />
+        <Route path="register_user" element={<SignUp />} />
       </Route>
+      <Route path="/products" element={<Products />} >
+      </Route>
+    </Route>
     )
   )
 
