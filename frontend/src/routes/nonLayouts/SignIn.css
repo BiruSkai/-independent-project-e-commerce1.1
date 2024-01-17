@@ -17,3 +17,10 @@ form, select{
          margin:5px;
          padding:5px;
  }
+
+ .infoLogin{
+        color:red;
+        margin:5px;
+        padding: 5px;
+        font-size:0.7rem;
+ }

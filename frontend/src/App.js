@@ -7,7 +7,7 @@ import React from "react";
 // NonLayouts
 import SignIn from './routes/nonLayouts/SignIn';
 import SignUp from './routes/nonLayouts/SignUp';
-import Products from './routes/nonLayouts/products/Products';
+import Products from './routes/layouts/products/Products';
 
 function App() {
 

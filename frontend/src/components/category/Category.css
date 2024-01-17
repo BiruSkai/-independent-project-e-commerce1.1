@@ -1,0 +1,37 @@
+.categoryContainer{
+        
+        width:100%;
+        max-height:35vh;
+        font-size:0.7rem;
+        position:fixed;
+        top:60px;
+        text-align: left;
+        z-index:1;
+        background-color:aquamarine;
+        >h4{
+                margin-top: 8px;
+                margin-bottom: 8px;
+                text-align: center;
+        }
+}
+
+.categoryList{
+        height:25vh;
+        width:100%;
+        >ul{
+                display:flex;
+                flex-flow:column wrap;
+                height:inherit;
+                width:inherit;
+                padding-left: 15px;
+                >li{
+                        list-style: none;
+                        flex: 0 0 auto;
+                }
+        }
+}
+
+#closeCategoryIcon{
+        position:absolute;
+        right:0;
+}

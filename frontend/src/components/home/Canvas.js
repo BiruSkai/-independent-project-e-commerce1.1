@@ -4,17 +4,16 @@ import {NavLink, Outlet} from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Canvas() {
-
-  const closeCanvas = () => {
-    document.querySelector(".canvasOn").style.display = "none";
-  }
+  const closeSignIn = () => {
+    document.querySelector(".closeBtn").style.display = "none";
+  } 
 
   return (
-    <div className="canvasOn">
+    <div className="canvasOn closeBtn">
        <header>
         <NavLink to="login" id="signInNavLink">Sign In</NavLink>
         <NavLink to="register_user">Sign Up</NavLink>
-        <div id="closeCanvasSignIn" onClick={closeCanvas}><CloseIcon fontSize='small' /></div>
+        <div id="closeCanvasSignIn" onClick={closeSignIn}><CloseIcon fontSize='small' /></div>
        </header>
        <main>
         <Outlet />
